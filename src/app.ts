@@ -15,7 +15,18 @@ dotenv.config();
 
 const app = express();
 
-// connectDB();
+if (!process.env.MONGODB_URI) {
+  throw new Error('DB not defined!');
+}
+if (!process.env.JWT_SECRET) {
+  throw new Error('Define a JWT Secret!');
+}
+
+if (!process.env.ALPHA) {
+  throw new Error('Define ALPHA!');
+}
+
+connectDB();
 
 app.use(
   cookieSession({
