@@ -27,6 +27,11 @@ if (!process.env.ALPHA) {
   throw new Error('Define ALPHA!');
 }
 
+if (!process.env.APP_NAME) {
+  console.error('Define ALPHA!');
+  process.env.APP_NAME = 'Test App';
+}
+
 connectDB();
 
 app.use(
