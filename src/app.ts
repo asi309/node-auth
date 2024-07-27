@@ -9,7 +9,8 @@ import passport from 'passport';
 import morgan from 'morgan';
 import helmet from 'helmet';
 
-import connectDB from './config/db';
+import connectDB from './lib/db';
+import apiRouter from './api/router';
 
 dotenv.config();
 
@@ -63,13 +64,25 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+// Enable cors
+app.use(cors());
+
 // Routes
+app.use('/api', apiRouter);
 
 // HealthCheck route
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({
     statusCode: 200,
     message: 'Server is running',
+  });
+});
+
+// Catch all routes -> 404
+app.use('*', (req: Request, res: Response) => {
+  res.status(404).json({
+    statusCode: 404,
+    message: 'Resource does not exist on server',
   });
 });
 
