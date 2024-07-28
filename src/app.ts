@@ -11,6 +11,7 @@ import helmet from 'helmet';
 
 import connectDB from './lib/db';
 import apiRouter from './api/router';
+import errorResponse from './middlewares/errorResponse';
 
 dotenv.config();
 
@@ -90,5 +91,7 @@ app.use('*', (req: Request, res: Response) => {
     message: 'Resource does not exist on server',
   });
 });
+
+app.use(errorResponse);
 
 export default app;
