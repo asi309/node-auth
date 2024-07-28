@@ -24,11 +24,21 @@ passport.use(
         if (!user) {
           user = new User({
             googleId: profile.id,
-            username: profile.displayName,
+            username: profile.displayName.toLowerCase(),
             email: profile.emails![0].value,
+            profilePicture: profile.photos![0].value,
           });
 
           // Write changes to db
+          await user.save();
+        }
+
+        // If user is incomplete, complete the values
+        if (!user.googleId || !user.profilePicture) {
+          if (!user.googleId) user.googleId = profile.id;
+          if (!user.profilePicture)
+            user.profilePicture = profile.photos![0].value;
+
           await user.save();
         }
 
