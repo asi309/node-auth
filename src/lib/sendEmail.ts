@@ -3,8 +3,8 @@ import nodemailer from 'nodemailer';
 const sendEmail = async (
   to: string,
   subject: string,
-  text?: string,
-  html?: string
+  html?: string,
+  text?: string
 ) => {
   try {
     const transporter = nodemailer.createTransport({

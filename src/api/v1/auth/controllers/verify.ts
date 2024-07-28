@@ -2,8 +2,6 @@ import crypto from 'node:crypto';
 import { Request, Response, NextFunction } from 'express';
 
 import User from '../../../../models/user';
-import sendEmail from '../../../../lib/sendEmail';
-import verificationHtml from '../../../../../html/confirmationEmail';
 
 // @desc  Verify User
 // @route POST /api/v1/auth/verify

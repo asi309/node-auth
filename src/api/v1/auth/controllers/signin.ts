@@ -1,8 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
+import dotenv from 'dotenv';
 
 import User from '../../../../models/user';
 import sendEmail from '../../../../lib/sendEmail';
 import verificationHtml from '../../../../../html/confirmationEmail';
+
+dotenv.config();
 
 // @desc    Signin user
 // @route   POST /api/v1/auth/signin

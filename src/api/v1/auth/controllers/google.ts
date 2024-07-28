@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import dotenv from 'dotenv';
 
 import User from '../../../../models/user';
-import sendEmail from '../../../../lib/sendEmail';
-import verificationHtml from '../../../../../html/confirmationEmail';
 
 // Configure Google Oauth Strategy
+dotenv.config();
 passport.use(
   new GoogleStrategy(
     {
@@ -17,7 +17,9 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ googleId: profile.id });
+        let user = await User.findOne({
+          $or: [{ googleId: profile.id }, { email: profile.emails![0].value }],
+        });
         // If user does not exist, create one here
         if (!user) {
           user = new User({
@@ -81,3 +83,5 @@ const googleCallback = async (
     );
   })(req, res, next);
 };
+
+export default googleCallback;

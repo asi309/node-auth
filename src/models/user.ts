@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import { customAlphabet } from 'nanoid';
-
-const nanoid = customAlphabet(process.env.ALPHA!, 10);
+import { v4 } from 'uuid';
 
 export interface UserSchemaType {
   _id: mongoose.Types.ObjectId;
@@ -52,7 +50,7 @@ userSchema.methods.getSignedJwtToken = function () {
 
 // Generate login verification code
 userSchema.methods.getVerificationCode = function () {
-  const verificationCode = nanoid();
+  const verificationCode = v4();
 
   this.loginVerificationCode = crypto
     .createHash('sha256')

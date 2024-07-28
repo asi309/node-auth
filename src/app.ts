@@ -33,6 +33,10 @@ if (!process.env.APP_NAME) {
   process.env.APP_NAME = 'Test App';
 }
 
+if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+  throw new Error('Define Google Credentials!');
+}
+
 connectDB();
 
 app.use(
